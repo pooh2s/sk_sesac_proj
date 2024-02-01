@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<script src="../js/MyLibrary.js" ></script> 
+    <title>MNST</title>
+    <style>
+        .carousel_slide {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: 2% 0;
+        }
+        .carousel_wrap {
+            margin: 0;
+            padding: 0;
+            height: 380px;
+            width: 300%;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel_wrap li {
+            width: 33.333%;
+            display: inline-block;
+            position: relative;
+            float: left;
+        }
+        .carousel_wrap li a {
+            height: 380px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        .carousel_1 a {
+            background-color: #ffffff;
+        }
+        .carousel_2 a {
+            background-color: #ffffff;
+        }
+        .carousel_3 a {
+            background-color: #ffffff;
+        }
+        .carousel_btns a{
+            display: block;
+            position: absolute;
+            top: 40%;
+        }
+        .carousel_btns img {
+            width: 80px;
+            height: 80px;
+        }
+        .carousel_btns .prev {
+            left: 1%;
+        }
+        .carousel_btns .next {
+            right: 1%;
+        }
+
+        .menu_box {
+            display: flex;
+            width: 100%;
+            height: auto;
+            color: #ffffff;
+            background-color: #0076be;
+        }
+
+        .menu_inner_box {
+            padding: 2% 0;
+            margin: 0 auto;
+            width: 70%;
+        }
+
+        .menu_inner_box a{
+            text-decoration-line: none;
+            color: #ffffff;
+        }
+
+        .menu_inner_box ul{
+            list-style: none;
+        }
+
+        .menu_inner_box li{
+            display: flex;
+            flex-direction: column;
+            float:left;
+
+            margin: 2%;
+        }
+
+        .menu_inner_box span{
+            text-align: center;
+            display: block;
+        }
+
+        .menu_inner_box img{
+            width: 90px;
+            height: 90px;
+        }
+
+        .service_box{
+			position: relative;
+            width: 100%;
+            height: auto;
+            color: #000000;
+            background-color: #ffffff;
+        }
+
+        .service_inner_box {
+			padding: 2% 0;
+            margin: 0 auto;
+            width: 70%;
+        }
+        
+        .service_menu_box {
+			width: 100%;
+			height: 80px;
+			border: 3px solid #D5D5D5;
+			
+			position: relative;
+			margin: 0 auto;
+        }
+        
+        .service_menu_box ul{
+            list-style: none;
+            padding: 0;
+            
+            display: block;
+    		margin-block-start: 1.5em;
+    		margin-block-end: 1.5em;
+    		margin-inline-start: 0px;
+    		margin-inline-end: 0px;
+    		padding-inline-start: 0px;
+        }
+        
+        .service_menu_box li{
+        	float: left;
+    		width: 20%;
+    		text-align: center;
+        }
+        
+        .service_menu_box img{
+            width: 20px;
+            height: 20px;
+            margin: 1%;
+        }
+        
+        .service_menu_box a{
+			text-decoration: none;
+			display: block;
+		    font-size: 16px;
+		    font-weight: normal;
+		    color: #333;
+		}
+    </style>
+</head>
+<body>
+	<script>
+		param1 = {
+			method: "POST",
+			url: "/ImageReader",      //protocol://hostname:port/pathname?name=value&searchparam#hash
+			setRequestHeader: '', //["요청-헤더","값"] setRequestHeader 는 for(var 키 in setRequestHeader) { xhr.setRequestHeader(키 , setRequestHeader[키]) }
+			async: "false",  //true<비동기>또는false<동기>           
+			withCredentials: "true", //true<cors 일 ? 쿠키 보냄>또는false<안보냄>    
+			//responseType : "text", //text또는document등..
+		}
+	</script>
+
+
+    <div id="div_id_popup" style="display: none;"> 
+    	<div id="div_id_출처" style="background-color: #0076be;"> <font id="font_id_출처" style="color: white;"><b>출처 : 금융감독원<br/><b/></font></div>
+       	
+       	<span id="span_id_피싱사기" style="margin-left: 5%; display: inline-grid;">
+			<img id="img_id_popup_피싱사기" src="" alt="web shell img" > 
+			<font id="font_id_popup_피싱사기" style="color: rgba(47,157,39);">[피싱사기 보안카드 입력창] </font> 
+       	</span>  
+  
+		<span id="span_id_금융감독원" style="margin-left: 5%; display: inline-grid;">  
+			<img id="img_id_popup_금융감독원" src="" alt="web shell img" > 
+			<font id="font_id_popup_금융감독원" style="color: rgba(47,157,39);">[금융감독원 사칭 팝업]</font>   
+		</span>
+		
+		<br/>	
+	</div>
+              
+    <script type="text/javascript"> 
+		param1.send_querystring = 'name1=popup.jpg&name2=popup2.jpg&name3=popup.txt&type=popup'   
+		param1.done_2xx_callback = ()=>{  
+			img_id_popup_피싱사기.src = window.xmlHttpRequest.response.split("---MY SPLIT---")[0];  
+			//img_id_popup_피싱사기.style.cssText = ''
+			
+			img_id_popup_금융감독원.src = window.xmlHttpRequest.response.split("---MY SPLIT---")[1];
+			//img_id_popup_피싱사기.style.cssText = ''
+			
+			//div_id_popup.innerHTML+="<br/>"        
+			
+			div_id_popup.innerHTML += window.xmlHttpRequest.response.split("---MY SPLIT---")[2];
+			
+			/*
+			<font id="font_id_popup_checkbox" style="">오늘 하루동안 보지않기</font>
+			<input id="input_id_popup_닫기" type="button" value="닫기" style=""/>
+			*/
+			div_id_checkbox_닫기=document.createElement('div')
+			div_id_checkbox_닫기.id='div_id_checkbox_닫기'
+			div_id_checkbox_닫기.style.cssText = 'background-color: rgba(189,189,189,1.0);'
+			
+			
+			input_id_popup_checkbox = document.createElement('input')
+			input_id_popup_checkbox.id = 'input_id_popup_checkbox'
+			input_id_popup_checkbox.type='checkbox'
+			input_id_popup_checkbox.value="checkbox"
+			input_id_popup_checkbox.style.cssText="margin-left: 5%;"
+			div_id_checkbox_닫기.appendChild(input_id_popup_checkbox)
+			
+
+			
+			font_id_popup_checkbox = document.createElement('font')
+			font_id_popup_checkbox.id = 'font_id_popup_checkbox'
+			font_id_popup_checkbox.innerText += '오늘 하루동안 보지않기'
+			div_id_checkbox_닫기.appendChild(font_id_popup_checkbox)  
+			
+			input_id_popup_닫기 = document.createElement('input')
+			input_id_popup_닫기.id='input_id_popup_닫기'
+			input_id_popup_닫기.type='button' 
+			input_id_popup_닫기.value='닫기'
+			input_id_popup_닫기.style.cssText = 'margin-left: 40%; ' 
+			
+				input_id_popup_닫기.style.cssText+='width: ' + (window.innerWidth / 25) + 'px;'  
+			
+			div_id_checkbox_닫기.appendChild(input_id_popup_닫기)
+			
+			
+			input_id_popup_닫기.addEventListener('click',(e)=>{
+				div_id_popup.style.cssText = div_id_popup.style.cssText.replace('display: block;', 'display: none;' )    
+			})
+			
+			
+			div_id_popup.appendChild(div_id_checkbox_닫기)  
+			
+			div_id_popup.style.cssText = 'margin-left: 40%; margin-top: 10%; display: block; z-index: 9999; position: fixed;background-color: white;' 
+			  
+					  
+		}
+		window.xmlHttpRequest = MyLibrary.Base.xmlHttpRequest( param1 )     
+            
+    </script> 
+
+    
+	<th:block th:replace="header :: headerFragment"></th:block>
+    <!-- main -->
+    <div style="height: auto; min-height: calc(100vh - 100px); padding-bottom: 100px;">
+        <!-- 광고배너 -->
+        <div class="carousel_slide">
+            <div>
+                <ul class="carousel_wrap">
+                    <li class="carousel_1">
+                        <a href="#">
+                            <!-- <img src="http://192.168.101.135:8888/banner1.png" alt="img1"> -->
+                            <img th:src="@{/images/banner1.png}" alt="img1">
+                        </a>
+                    </li>
+                    <li class="carousel_2">
+                        <a href="#">
+                            <!-- <img src="http://192.168.101.135:8888/banner2.png" alt="img2"> -->
+                            <img th:src="@{/images/banner2.png}" alt="img2">
+                        </a>
+                    </li>
+                    <li class="carousel_3">
+                        <a href="#">
+                            <!-- <img src="http://192.168.101.135:8888/banner3.png" alt="img3"> -->
+                            <img th:src="@{/images/banner3.png}" alt="img3">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="carousel_btns">
+                <a href="#" class="prev" onclick="return false"><img th:src="@{/images/btn_prev.png}"></a>
+                <a href="#" class="next" onclick="return false"><img th:src="@{/images/btn_next.png}"></a>
+            </div>
+        </div>
+        <!-- 금융상품 -->
+        <div class="menu_box">
+            <div class="menu_inner_box">
+                <p style="font-size: 22px;">금융상품</p>
+                <ul>
+                    <li><a href="#"><img th:src="@{/images/inmoney.png}"/><span>예금</span></a></li>
+                    <li><a href="#"><img th:src="@{/images/chart.png}"/><span>펀드</span></a></li>
+                    <li><a href="#"><img th:src="@{/images/loan.png}"/><span>대출</span></a></li>
+                    <li><a href="#"><img th:src="@{/images/oldmoney.png}"/><span>퇴직연금</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 주요 서비스 -->
+        <div class="service_box">
+            <div class="service_inner_box">
+				<p style="font-size: 22px;">주요서비스</p>
+				<div class="service_menu_box">
+					<ul>
+	                    <li><a class="a_class_next버튼" href="/banking/inout"><span>이체</span><!-- <img th:src="@{/images/next.png}"/> --></a></li>
+	                    <li><a class="a_class_next버튼" href="/banking/acchistory"><span>계좌조회</span><!-- <img th:src="@{/images/next.png}"/> --></a></li>
+	                    <li><a class="a_class_next버튼" href="/jsp/___NoticeBoard_List"><span>문의게시판</span><!-- <img th:src="@{/images/next.png}"/> --></a></li>
+	                    <li><a class="a_class_next버튼" href="/"><span>인터넷환전</span><!-- <img th:src="@{/images/next.png}"/> --></a></li>
+	                    <li><a class="a_class_next버튼" href="/"><span>환율조회</span><!-- <img th:src="@{/images/next.png}"/> --></a></li>
+                	</ul>
+				</div>
+			<script>    
+				//console.log(xmlHttpRequest.response)   
+				window.img_s=[]
+				
+      			document.querySelectorAll('a[class=a_class_next버튼]').forEach((a,i,arr)=>{
+      				img = document.createElement('img');
+      				a.appendChild(img)
+      				window.img_s.push(img)
+          		}) 	 
+					
+					
+				
+	  			param1.send_querystring = 'name1=next.png&type=images'      
+    			param1.done_2xx_callback = ()=>{ 
+    				for(var i=0;i<window.img_s.length;i++){
+    					window.img_s[i].src = window.xmlHttpRequest.response;  	 
+    				}
+				}
+    			window.xmlHttpRequest = MyLibrary.Base.xmlHttpRequest( param1 )  
+            </script>
+            
+            </div>
+        </div>
+    </div>
+    <!-- script -->
+    <script>
+        $(document).ready(function() {
+
+            var carouselIndex = 0;
+            var carouselLength = $(".carousel_wrap li").length;
+
+            setInterval(function() {
+                if(carouselIndex < carouselLength-1) {
+                    $(".carousel_wrap").animate({left:"-=100%"}, 2000);
+                    carouselIndex += 1;
+                } else {
+                    $(".carousel_wrap").animate({left:"0"}, 2000);
+                    carouselIndex = 0;
+                }
+            }, 4000);
+
+            $(".prev").click(function() {
+                if(carouselIndex > 0) {
+                    $(".carousel_wrap").animate({left:"+=100%"}, 2000);
+                    carouselIndex -= 1;
+                } else {
+                    $(".carousel_wrap").animate({left:"-200%"}, 2000);
+                    carouselIndex = carouselLength-1;
+                }
+            });
+
+            $(".next").click(function() {
+                if(carouselIndex < carouselLength-1) {
+                    $(".carousel_wrap").animate({left:"-=100%"}, 2000);
+                    carouselIndex += 1;
+                } else {
+                    $(".carousel_wrap").animate({left:"0"}, 2000);
+                    carouselIndex = 0;
+                }
+            });
+        });
+    </script>
+    <!--footer-->
+	<th:block th:replace="footer :: footerFragment"></th:block>
+</body>
+</html>

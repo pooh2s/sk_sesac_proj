@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+apt-get update && apt-get upgrade -y && apt-get dist-upgrade && {
+	echo -e "apt-get update && apt-get upgrade -y && apt-get dist-upgrade " > ~/my_reboot.log
+} 
+
+s_msfupdate=`which msfupdate`
+
+if [ ! -z $s_msfupdate ];then
+	msfupdate
+fi
+
+
+
